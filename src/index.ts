@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as https from 'https';
 import * as url from 'url';
 
-const hostname: string = '127.0.0.1';
+const hostname: string = '0.0.0.0';
 const port: number = 7777;
 
 function route(handle, pathname, parsed, response) {
@@ -132,6 +132,10 @@ const server: http.Server = http.createServer(
     console.log(parsed);
     console.log('request for ' + pathname + ' received.');
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     route(handle, pathname, parsed, response);
   }
 );
