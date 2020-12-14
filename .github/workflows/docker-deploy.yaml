@@ -13,11 +13,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: build docker image
-        run: docker build -t woochanlee/java-project-frame-admin .
+        run: docker build -t woochanlee/github-readme-meal .
 
       - name: publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: woochanlee/java-project-frame-admin
+          name: woochanlee/github-readme-meal
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
