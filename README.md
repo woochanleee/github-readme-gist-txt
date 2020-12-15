@@ -15,7 +15,7 @@ Change the `?username= &gistid=` value to your GitHub's username and Gist id.
 
 ### Demo
 
-![급식](https://github-readme-meal.vercel.app/api?username=woochanleee&gistid=fcdc51abe32b2ccf38b74f7229571da2)
+![급식](https://github-readme-gist-txt.vercel.app/api?username=woochanleee&gistid=fcdc51abe32b2ccf38b74f7229571da2)
 
 ### Quick Tip (Align The Repo Cards)
 
