@@ -4,6 +4,9 @@
   "description": "⚡ Dynamically generated meals for your github readmes!",
   "author": "woochanleee",
   "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch src --delay 1 --exec ts-node src/index.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/woochanleee/github-readme-meal.git"
@@ -17,7 +20,7 @@
   "devDependencies": {
     "@types/node": "^14.14.13",
     "@vercel/node": "^1.8.5",
-    "@zeit/ncc": "^0.22.3",
+    "nodemon": "^2.0.6",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   },
