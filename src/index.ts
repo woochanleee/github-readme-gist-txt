@@ -1,23 +1,14 @@
 import * as http from 'http';
 import * as https from 'https';
-import * as url from 'url';
 
-const hostname: string = '0.0.0.0';
-const port: number = 6060;
+import { NowRequest, NowResponse } from '@vercel/node';
 
-function route(handle, pathname, parsed, response) {
-  console.log('about to route a request for ' + pathname);
-  if (typeof handle[pathname] === 'function') {
-    handle[pathname](response, parsed);
-  } else {
-    console.log('no request handler found for ' + pathname);
-    response.writeHead(404, { 'Content-Type': 'text/plain' });
-    response.write('404 Not found');
-    response.end();
-  }
-}
+export default function (request: NowRequest, response: NowResponse) {
+  const {
+    username = 'woochanleee',
+    gistid = 'fcdc51abe32b2ccf38b74f7229571da2',
+  } = request.query;
 
-function getMeal(response, { username, gistid }) {
   let result = [];
   let title;
 
@@ -59,7 +50,9 @@ function getMeal(response, { username, gistid }) {
         }
 
         response.setHeader('Content-Type', 'image/svg+xml');
-        response.write(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="335" viewBox="0 0 400 335" fill="none">
+        response.send(`<svg xmlns="http://www.w3.org/2000/svg" width="400" height="${
+          32 * result.length
+        }" viewBox="0 0 400 ${32 * result.length}" fill="none">
   <style>
     .header {
       font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -76,7 +69,9 @@ function getMeal(response, { username, gistid }) {
   </style>
 
 
-  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="334" stroke="#E4E2E2" width="399" fill="#fffefe" stroke-opacity="1"/>
+  <rect data-testid="card-bg" x="0.5" y="0.5" rx="4.5" height="${
+    32 * result.length - 1
+  }" stroke="#E4E2E2" width="399" fill="#fffefe" stroke-opacity="1"/>
 
   
 <g data-testid="card-title" transform="translate(25, 35)">
@@ -89,7 +84,9 @@ function getMeal(response, { username, gistid }) {
 <text x="0" y="0" class="header" data-testid="header">${title}</text>
 </g>
 </g>
-<rect width="368" height="265" fill="#f6f8fa" x="16" y="50" />
+<rect width="368" height="${
+          26.3 * result.length
+        }" fill="#f6f8fa" x="16" y="50" />
 ${result
   .map((result, index) => {
     return `<g transform="translate(${
@@ -112,34 +109,3 @@ ${result
     }
   );
 }
-
-var handle = {}; // javascript object has key:value pair.
-handle['/api/meal'] = getMeal;
-
-const server: http.Server = http.createServer(
-  (request: http.IncomingMessage, response: http.ServerResponse) => {
-    const { pathname, search } = url.parse(request.url, true);
-    const parsed = {};
-    if (search) {
-      search
-        .slice(1)
-        .split('&')
-        .forEach((query) => {
-          const [key, value] = query.split('=');
-          parsed[key] = value;
-        });
-    }
-    console.log(parsed);
-    console.log('request for ' + pathname + ' received.');
-
-    response.setHeader('Access-Control-Allow-Origin', '*');
-    response.setHeader('Access-Control-Request-Method', '*');
-    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-    response.setHeader('Access-Control-Allow-Headers', '*');
-    route(handle, pathname, parsed, response);
-  }
-);
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}`);
-});
