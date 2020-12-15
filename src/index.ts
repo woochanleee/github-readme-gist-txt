@@ -3,7 +3,7 @@ import * as https from 'https';
 import * as url from 'url';
 
 const hostname: string = '0.0.0.0';
-const port: number = 7777;
+const port: number = 6060;
 
 function route(handle, pathname, parsed, response) {
   console.log('about to route a request for ' + pathname);
