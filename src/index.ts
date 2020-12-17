@@ -18,7 +18,7 @@ function route(handle, pathname, parsed, response) {
   }
 }
 
-function getMeal(response, { username, gistid }) {
+function getMeal(response, { username = 'woochanleee', gistid = 'fcdc51abe32b2ccf38b74f7229571da2' }) {
   let result = [];
   let title;
 
@@ -50,7 +50,9 @@ function getMeal(response, { username, gistid }) {
 
       response.setHeader('Content-Type', 'image/svg+xml');
       response.write(`
-  <svg xmlns="http://www.w3.org/2000/svg" width="400" height="${32 * result.length}" viewBox="0 0 400 ${32 * result.length}" fill="none">
+  <svg xmlns="http://www.w3.org/2000/svg" width="400" height="${32 * result.length + 8}" viewBox="0 0 400 ${
+        32 * result.length + 8
+      }" fill="none">
   <style>
     .header {
       font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -64,7 +66,7 @@ function getMeal(response, { username, gistid }) {
     .badge rect { opacity: 0.2 }
     .sequence { fill: #b3b6b9 }
   </style>
-  <rect x="0.5" y="0.5" rx="4.5" height="${32 * result.length - 1}" stroke="#E4E2E2" width="399" fill="#fffefe" stroke-opacity="1"/>
+  <rect x="0.5" y="0.5" rx="4.5" height="${32 * result.length + 7}" stroke="#E4E2E2" width="399" fill="#fffefe" stroke-opacity="1"/>
   <g transform="translate(25, 35)">
     <g transform="translate(0, 0)">
       <svg class="icon" x="0" y="-13" viewBox="0 0 16 16" version="1.1" width="16" height="16">
